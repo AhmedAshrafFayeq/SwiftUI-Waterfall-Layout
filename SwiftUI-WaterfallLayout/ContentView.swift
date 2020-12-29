@@ -13,16 +13,16 @@ struct ContentView: View {
         ScrollView{
             HStack(spacing: 16) {
                 VStack{
-                    ForEach(0...3, id: \.self) { index in
-                    CardView()
-                        .frame(height: index % 2 == 0 ? 320 : 200)
+                    ForEach(Array(leftCards.enumerated()), id: \.element) { offset, card in
+                        CardView(card: card)
+                        .frame(height: offset % 2 == 0 ? 320 : 200)
 
                     }
                 }
                 VStack{
-                   ForEach(0...3, id: \.self) { index in
-                        CardView()
-                            .frame(height: index % 2 != 0 ? 320 : 200)
+                   ForEach(Array(rightCards.enumerated()), id: \.element) { offset, card in
+                   CardView(card: card)
+                   .frame(height: offset % 2 != 0 ? 320 : 200)
                     }
                 }
             }.padding()
@@ -30,9 +30,40 @@ struct ContentView: View {
     }
 }
 
+struct Card: Hashable{
+    let title: String
+    let imageName: String
+}
+
+let leftCards :[Card] = [
+    .init(title: "Kick Boxing", imageName: "kickBoxing"),
+    .init(title: "Boxing", imageName: "boxing"),
+    .init(title: "Morning", imageName: "morning"),
+    .init(title: "Fitness", imageName: "fitness")
+]
+
+let rightCards :[Card] = [
+    .init(title: "Pilates", imageName: "pilates"),
+    .init(title: "Intervals", imageName: "intervals"),
+    .init(title: "Yoga", imageName: "yoga"),
+    .init(title: "Run", imageName: "running")
+]
+
 struct CardView: View {
-    var body: some View{
-        RoundedRectangle(cornerRadius: 10)
+    var card: Card
+    var body: some View {
+        GeometryReader{ proxy in
+            Image(self.card.imageName)
+            .resizable()
+            .scaledToFill()
+            .frame(
+                width: proxy.size.width,
+                height: proxy.size.height
+            ).clipped()
+            .cornerRadius(10)
+                .overlay(RoundedRectangle(cornerRadius: 10).fill(Color(.gray).opacity(0.4)))
+            
+        }
     }
 }
 

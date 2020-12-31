@@ -53,16 +53,24 @@ struct CardView: View {
     var card: Card
     var body: some View {
         GeometryReader{ proxy in
-            Image(self.card.imageName)
-            .resizable()
-            .scaledToFill()
-            .frame(
-                width: proxy.size.width,
-                height: proxy.size.height
-            ).clipped()
-            .cornerRadius(10)
-                .overlay(RoundedRectangle(cornerRadius: 10).fill(Color(.gray).opacity(0.4)))
-            
+            ZStack{
+                Image(self.card.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(
+                    width: proxy.size.width,
+                    height: proxy.size.height
+                ).clipped()
+                .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).fill(Color(.gray).opacity(0.4)))
+                Text(self.card.title.uppercased())
+                    .font(.title)
+                    .fontWeight(.heavy)
+                    .multilineTextAlignment(.center)
+                    .padding(4)
+                    .foregroundColor(.white)
+                
+            }
         }
     }
 }

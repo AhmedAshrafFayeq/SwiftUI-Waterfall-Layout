@@ -26,7 +26,18 @@ struct ContentView: View {
                     }
                 }
             }.padding()
-        }
+        }.navigationBarTitle("Categories")
+            .navigationBarItems(leading: Button(action: {
+                // What to perform
+                }) {
+                    // How the button looks like
+                    Image(systemName: "arrow.backward")
+                },trailing: Button(action: {
+                    // What to perform
+                }) {
+                    // How the button looks like
+                    Image(systemName: "magnifyingglass")
+            })
     }
 }
 
@@ -77,6 +88,9 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        
+        NavigationView {
+            ContentView()
+        }.accentColor(.primary)
     }
 }

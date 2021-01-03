@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        NavigationView{
         ScrollView{
             HStack(spacing: 16) {
                 VStack{
@@ -26,6 +27,7 @@ struct ContentView: View {
                     }
                 }
             }.padding()
+        
         }.navigationBarTitle("Categories")
             .navigationBarItems(leading: Button(action: {
                 // What to perform
@@ -38,6 +40,8 @@ struct ContentView: View {
                     // How the button looks like
                     Image(systemName: "magnifyingglass")
             })
+    }
+        
     }
 }
 

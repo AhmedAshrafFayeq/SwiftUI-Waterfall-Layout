@@ -33,14 +33,14 @@ struct ContentView: View {
                 // What to perform
                 }) {
                     // How the button looks like
-                    Image(systemName: "arrow.backward")
+                    Image(systemName: "arrow.left")
                 },trailing: Button(action: {
                     // What to perform
                 }) {
                     // How the button looks like
                     Image(systemName: "magnifyingglass")
             })
-    }
+        }.accentColor(.primary)
         
     }
 }

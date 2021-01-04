@@ -32,37 +32,54 @@ struct ContentView: View {
             .map{$0.element}
     }
     
+    var visibleLeftCarfs: [Card] {
+        if cards.count % 2 != 0 {
+            let slice = Array(leftCards[0..<leftCards.count - 1])
+            return Array(slice)
+        }else{
+            return leftCards
+        }
+    }
+    
+    var visibleRightCarfs: [Card] {
+        if cards.count % 2 != 0, let lastLeftCard = leftCards.last{
+            return rightCards + [lastLeftCard]
+        }else{
+            return rightCards
+        }
+    }
+    
     var body: some View {
         NavigationView{
-        ScrollView{
-            HStack(spacing: 16) {
-                VStack{
-                    ForEach(Array(leftCards.enumerated()), id: \.element) { offset, card in
-                        CardView(card: card)
-                        .frame(height: offset % 2 == 0 ? 320 : 200)
-
+            ScrollView{
+                HStack(spacing: 16) {
+                    VStack{
+                        ForEach(Array(leftCards.enumerated()), id: \.element) { offset, card in
+                            CardView(card: card)
+                                .frame(height: offset % 2 == 0 ? 320 : 200)
+                            
+                        }
                     }
-                }
-                VStack{
-                   ForEach(Array(rightCards.enumerated()), id: \.element) { offset, card in
-                   CardView(card: card)
-                   .frame(height: offset % 2 != 0 ? 320 : 200)
+                    VStack{
+                        ForEach(Array(rightCards.enumerated()), id: \.element) { offset, card in
+                            CardView(card: card)
+                                .frame(height: offset % 2 != 0 ? 320 : 200)
+                        }
                     }
-                }
-            }.padding()
-        
-        }.navigationBarTitle("Categories")
-            .navigationBarItems(leading: Button(action: {
-                // What to perform
-                }) {
-                    // How the button looks like
-                    Image(systemName: "arrow.left")
-                },trailing: Button(action: {
+                }.padding()
+                
+            }.navigationBarTitle("Categories")
+                .navigationBarItems(leading: Button(action: {
                     // What to perform
                 }) {
                     // How the button looks like
-                    Image(systemName: "magnifyingglass")
-            })
+                    Image(systemName: "arrow.left")
+                    },trailing: Button(action: {
+                        // What to perform
+                    }) {
+                        // How the button looks like
+                        Image(systemName: "magnifyingglass")
+                })
         }.accentColor(.primary)
         
     }
@@ -79,13 +96,13 @@ struct CardView: View {
         GeometryReader{ proxy in
             ZStack{
                 Image(self.card.imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(
-                    width: proxy.size.width,
-                    height: proxy.size.height
+                    .resizable()
+                    .scaledToFill()
+                    .frame(
+                        width: proxy.size.width,
+                        height: proxy.size.height
                 ).clipped()
-                .cornerRadius(10)
+                    .cornerRadius(10)
                     .overlay(RoundedRectangle(cornerRadius: 10).fill(Color(.gray).opacity(0.4)))
                 Text(self.card.title.uppercased())
                     .font(.title)

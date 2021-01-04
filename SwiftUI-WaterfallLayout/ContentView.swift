@@ -9,6 +9,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let cards: [Card] = [
+        .init(title: "Kick Boxing", imageName: "kickBoxing"),
+        .init(title: "Boxing", imageName: "boxing"),
+        .init(title: "Morning", imageName: "morning"),
+        .init(title: "Fitness", imageName: "fitness"),
+        .init(title: "Pilates", imageName: "pilates"),
+        .init(title: "Intervals", imageName: "intervals"),
+        .init(title: "Yoga", imageName: "yoga"),
+        .init(title: "Run", imageName: "running")
+    ]
+    
+    var leftCards: [Card]{
+        cards.enumerated()
+            .filter{ $0.offset % 2 == 0 }
+            .map{$0.element}
+    }
+    var rightCards: [Card]{
+        cards.enumerated()
+            .filter{ $0.offset % 2 != 0 }
+            .map{$0.element}
+    }
+    
     var body: some View {
         NavigationView{
         ScrollView{
@@ -49,20 +72,6 @@ struct Card: Hashable{
     let title: String
     let imageName: String
 }
-
-let leftCards :[Card] = [
-    .init(title: "Kick Boxing", imageName: "kickBoxing"),
-    .init(title: "Boxing", imageName: "boxing"),
-    .init(title: "Morning", imageName: "morning"),
-    .init(title: "Fitness", imageName: "fitness")
-]
-
-let rightCards :[Card] = [
-    .init(title: "Pilates", imageName: "pilates"),
-    .init(title: "Intervals", imageName: "intervals"),
-    .init(title: "Yoga", imageName: "yoga"),
-    .init(title: "Run", imageName: "running")
-]
 
 struct CardView: View {
     var card: Card

@@ -32,7 +32,7 @@ struct ContentView: View {
             .map{$0.element}
     }
     
-    var visibleLeftCarfs: [Card] {
+    var visibleLeftCards: [Card] {
         if cards.count % 2 != 0 {
             let slice = Array(leftCards[0..<leftCards.count - 1])
             return Array(slice)
@@ -41,7 +41,7 @@ struct ContentView: View {
         }
     }
     
-    var visibleRightCarfs: [Card] {
+    var visibleRightCards: [Card] {
         if cards.count % 2 != 0, let lastLeftCard = leftCards.last{
             return rightCards + [lastLeftCard]
         }else{
@@ -54,14 +54,14 @@ struct ContentView: View {
             ScrollView{
                 HStack(spacing: 16) {
                     VStack{
-                        ForEach(Array(leftCards.enumerated()), id: \.element) { offset, card in
+                        ForEach(Array(visibleLeftCards.enumerated()), id: \.element) { offset, card in
                             CardView(card: card)
                                 .frame(height: offset % 2 == 0 ? 320 : 200)
                             
                         }
                     }
                     VStack{
-                        ForEach(Array(rightCards.enumerated()), id: \.element) { offset, card in
+                        ForEach(Array(visibleRightCards.enumerated()), id: \.element) { offset, card in
                             CardView(card: card)
                                 .frame(height: offset % 2 != 0 ? 320 : 200)
                         }

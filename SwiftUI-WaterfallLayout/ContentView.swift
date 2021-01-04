@@ -33,7 +33,7 @@ struct ContentView: View {
     }
     
     var visibleLeftCards: [Card] {
-        if cards.count % 2 != 0 {
+        if cards.count % 2 != 0, cards.count != 1{
             let slice = Array(leftCards[0..<leftCards.count - 1])
             return Array(slice)
         }else{
@@ -42,7 +42,8 @@ struct ContentView: View {
     }
     
     var visibleRightCards: [Card] {
-        if cards.count % 2 != 0, let lastLeftCard = leftCards.last{
+        if cards.count % 2 != 0, let lastLeftCard = leftCards.last
+        , cards.count != 1{
             return rightCards + [lastLeftCard]
         }else{
             return rightCards
@@ -59,12 +60,17 @@ struct ContentView: View {
                                 .frame(height: offset % 2 == 0 ? 320 : 200)
                             
                         }
+                        Spacer()
                     }
                     VStack{
+                        if cards.count == 1 {
+                            RoundedRectangle(cornerRadius: 10).fill(Color.clear)
+                        }
                         ForEach(Array(visibleRightCards.enumerated()), id: \.element) { offset, card in
                             CardView(card: card)
                                 .frame(height: offset % 2 != 0 ? 320 : 200)
                         }
+                        Spacer()
                     }
                 }.padding()
                 
